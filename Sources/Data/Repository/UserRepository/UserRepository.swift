@@ -16,6 +16,8 @@ public protocol UserRepository {
 
 public final class UserRepositoryImpl: UserRepository {
     
+    public init() {}
+    
     public func getListUser(param: APIParameters.getListUser) -> AnyPublisher<Result<Data, NetworkRequestError>, Never> {
         NetworkServices.shared.request(request: APIEndPoint.getUsers(queryParams: param))
     }
