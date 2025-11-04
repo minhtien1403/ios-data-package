@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "ios-shared-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/minhtien1403/ios-shared-package",
+      "state" : {
+        "branch" : "master",
+        "revision" : "990195fbc7e73bb4dfd4dd719f3fa1aebbbe78a2"
+      }
+    }
+  ],
+  "version" : 2
+}
