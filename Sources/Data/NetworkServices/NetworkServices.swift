@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import Shared
 
-public struct NetworkServices {
+struct NetworkServices {
     
     /// URLSession instance for handling network requests.
     private let urlSession: URLSession
