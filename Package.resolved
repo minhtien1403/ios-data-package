@@ -1,12 +1,39 @@
 {
   "pins" : [
     {
+      "identity" : "ios-domain-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/minhtien1403/ios-domain-package",
+      "state" : {
+        "branch" : "master",
+        "revision" : "60658b21806db5b92417c187bd574ec30faf1259"
+      }
+    },
+    {
       "identity" : "ios-shared-package",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/minhtien1403/ios-shared-package",
       "state" : {
         "branch" : "master",
-        "revision" : "990195fbc7e73bb4dfd4dd719f3fa1aebbbe78a2"
+        "revision" : "3619767fa21cfca35abee7c7202071e60ab1b52b"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
+        "version" : "7.12.0"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
       }
     }
   ],

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import Shared
+import Domain
 
 struct NetworkServices {
     
@@ -31,7 +32,7 @@ struct NetworkServices {
     ///   - request: The `HTTPRequest` to be executed.
     ///   - cacheExpiryTime: The time interval (in seconds) before the cache expires.
     /// - Returns: A publisher emitting a `Result` containing the decoded response or an error.
-    func request(request: HTTPRequest, cacheExpiryTime: TimeInterval = 3600) -> AnyPublisher<Result<Data, NetworkRequestError>, Never> {
+    func request(request: HTTPRequest, cacheExpiryTime: TimeInterval = 3600) -> AnyPublisher<Result<Data, APIError>, Never> {
         // Attempt to build a valid URLRequest from the HTTPRequest object.
         guard let request = request.buildRequest() else {
             return Just(.failure(.invalidRequest)).eraseToAnyPublisher()
@@ -46,7 +47,7 @@ struct NetworkServices {
     ///   - request: The `URLRequest` to be executed.
     ///   - cacheExpiryTime: The cache expiry duration in seconds.
     /// - Returns: A publisher emitting a `Result` containing the decoded response or an error.
-    private func makeRequest(request: URLRequest, cacheExpiryTime: TimeInterval = 3600) -> AnyPublisher<Result<Data, NetworkRequestError>, Never> {
+    private func makeRequest(request: URLRequest, cacheExpiryTime: TimeInterval = 3600) -> AnyPublisher<Result<Data, APIError>, Never> {
         Log.info("Make request - [\(request.httpMethod?.uppercased() ?? "")] '\(request.url?.absoluteString ?? "")'")
 
         return urlSession.dataTaskPublisher(for: request)
@@ -83,11 +84,11 @@ struct NetworkServices {
             .eraseToAnyPublisher()
     }
     
-    /// Maps HTTP status codes to `NetworkRequestError` cases.
+    /// Maps HTTP status codes to `APIError` cases.
     ///
     /// - Parameter statusCode: The HTTP response status code.
-    /// - Returns: Corresponding `NetworkRequestError` type.
-    private func httpError(_ statusCode: Int) -> NetworkRequestError {
+    /// - Returns: Corresponding `APIError` type.
+    private func httpError(_ statusCode: Int) -> APIError {
         switch statusCode {
         case 400: return .badRequest
         case 401: return .unauthorized
@@ -103,8 +104,8 @@ struct NetworkServices {
     /// Handles general errors encountered during network requests.
     ///
     /// - Parameter error: The encountered error.
-    /// - Returns: Corresponding `NetworkRequestError` type.
-    private func handleError(_ error: Error) -> NetworkRequestError {
+    /// - Returns: Corresponding `APIError` type.
+    private func handleError(_ error: Error) -> APIError {
         switch error {
         case is Swift.DecodingError:
             return .decodingError(error.localizedDescription)
@@ -116,7 +117,7 @@ struct NetworkServices {
                 return .noInternet
             }
             return .urlSessionFailed(urlError)
-        case let error as NetworkRequestError:
+        case let error as APIError:
             return error
         default:
             return .unknownError

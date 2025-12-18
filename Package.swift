@@ -19,6 +19,10 @@ let package = Package(
         .package(
             url: "https://github.com/minhtien1403/ios-shared-package",
             branch: "master"
+        ),
+        .package(
+            url: "https://github.com/minhtien1403/ios-domain-package",
+            branch: "master"
         )
     ],
     targets: [
@@ -27,7 +31,8 @@ let package = Package(
         .target(
             name: "Data",
             dependencies: [
-                .product(name: "Shared", package: "ios-shared-package")
+                .product(name: "Shared", package: "ios-shared-package"),
+                .product(name: "Domain", package: "ios-domain-package")
             ],
             path: "Sources/Data"
         ),

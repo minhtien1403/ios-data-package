@@ -7,22 +7,17 @@
 
 import Combine
 import Foundation
-
-public protocol UserRepository {
-    
-    func getListUser(param: APIParameters.getListUser) -> AnyPublisher<Result<Data, NetworkRequestError>, Never>
-    func getUserDetails(param: APIParameters.getUser) -> AnyPublisher<Result<Data, NetworkRequestError>, Never>
-}
+import Domain
 
 public final class UserRepositoryImpl: UserRepository {
     
     public init() {}
-    
-    public func getListUser(param: APIParameters.getListUser) -> AnyPublisher<Result<Data, NetworkRequestError>, Never> {
-        NetworkServices.shared.request(request: APIEndPoint.getUsers(queryParams: param))
+
+    public func getListUser(perPage: Int, since: Int) -> AnyPublisher<Result<Data, Domain.APIError>, Never> {
+        NetworkServices.shared.request(request: APIEndPoint.getUsers(queryParams: .init(perPage: perPage, since: since)))
     }
-    
-    public func getUserDetails(param: APIParameters.getUser) -> AnyPublisher<Result<Data, NetworkRequestError>, Never> {
-        NetworkServices.shared.request(request: APIEndPoint.getUser(param: param))
+
+    public func getUserDetails(userName: String) -> AnyPublisher<Result<Data, Domain.APIError>, Never> {
+        NetworkServices.shared.request(request: APIEndPoint.getUser(param: .init(username: userName)))
     }
 }
